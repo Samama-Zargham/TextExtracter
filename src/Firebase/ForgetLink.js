@@ -1,5 +1,5 @@
 import auth from '@react-native-firebase/auth';
-import { FlashMessage } from '../components/SnackBar';
+import { FlashMessage } from '../components/Reusable/SnackBar';
 
 
 export const ForgetLink = (Email, navigation, openCloseModal) => {
@@ -11,7 +11,7 @@ export const ForgetLink = (Email, navigation, openCloseModal) => {
     auth().sendPasswordResetEmail(Email.toString().trim())
       .then(function (user) {
         openCloseModal(false)
-        FlashMessage("Please check your email", "success")
+        FlashMessage("Reset password link has been sent to your mail, please check your mail", "success")
         navigation.goBack()
 
       }).catch(error => {

@@ -4,13 +4,24 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { COLORS, GeneralWidth } from '../../Utils/AppStyles'
 import { useDispatch } from 'react-redux'
 import { userData } from '../../Redux/reducers'
+import { Login } from '../../Firebase/Login'
+import Loader from '../../components/Reusable/Loader'
 
 const SignIn = ({ navigation }) => {
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('')
+    const [loading, setloading] = useState(false)
     let dispatch = useDispatch();
     const handleSignIn = () => {
-        dispatch(userData({ data: "user " }))
+
+        Login(
+            email,
+            password,
+            () => {
+                dispatch(userData({ data: "user " }))
+            },
+            setloading
+        )
     }
     return (
         <KeyboardAwareScrollView
@@ -74,15 +85,16 @@ const SignIn = ({ navigation }) => {
                     {"  SING UP"}
                 </Text>
             </Text>
+            <Loader loading={loading} />
         </KeyboardAwareScrollView>
     )
 }
-export const Header = ({ text, top, bottom, fontSize }) => {
+export const Header = ({ text, width, color, top, bottom, fontSize }) => {
     return (
         <Text style={{
-            color: COLORS.textColor,
+            color: color ? color : COLORS.textColor,
             fontSize: fontSize ? fontSize : 25,
-            width: "90%",
+            width: width ? width : "90%",
             alignSelf: "center",
             fontWeight: "500",
             marginTop: top ? top : 0,
@@ -132,7 +144,7 @@ export const PrimaryTextInput = ({
         </>
     )
 }
-export const PrimaryButton = ({ top, bottom, width, disable, titleColor, bkg, fontSize, containerStyle, onPress, title }) => {
+export const PrimaryButton = ({ top, height, bottom, width, disable, titleColor, bkg, fontSize, containerStyle, onPress, title }) => {
 
     return (
         <TouchableOpacity
@@ -141,8 +153,8 @@ export const PrimaryButton = ({ top, bottom, width, disable, titleColor, bkg, fo
             style={[{
                 justifyContent: "center",
                 alignItems: "center",
-                width: "90%",
-                height: 50,
+                width: width ? width : "90%",
+                height: height ? height : 50,
                 backgroundColor: bkg ? bkg : COLORS.PRIMARY,
                 alignSelf: 'center',
                 borderRadius: 4,

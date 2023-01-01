@@ -1,15 +1,11 @@
 import auth from "@react-native-firebase/auth"
-import { Alert } from "react-native";
-import { FlashMessage } from "../components/SnackBar";
+import { FlashMessage } from "../components/Reusable/SnackBar"
 
-export const Login = (Email, Password, UserType, onSuccess, openCloseModal) => {
+export const Login = (Email, Password, onSuccess, openCloseModal) => {
     console.log(Email, "  ", Password)
 
     if (!Email || !Password) {
         return FlashMessage("Please Fill The Email or Password", "danger")
-    }
-    else if (!UserType) {
-        return FlashMessage("Please Select User type", "danger")
     }
     else {
         openCloseModal(true),
@@ -17,24 +13,8 @@ export const Login = (Email, Password, UserType, onSuccess, openCloseModal) => {
                 .signInWithEmailAndPassword(Email.toString().trim(), Password)
                 .then(() => {
                     openCloseModal(false)
-
-                    Alert.alert(
-                        'Login',
-                        "Are you sure you want to proceed as a " + UserType + " user", // <- this part is optional, you can pass an empty string
-                        [
-                            {
-                                text: 'Yes', onPress: () => {
-                                    FlashMessage('Login Successfully', "success"),
-                                        onSuccess()
-                                }
-                            },
-                            {
-                                text: 'No',
-                                onPress: () => console.log('No Pressed'),
-                                style: 'cancel',
-                            },
-                        ]
-                    )
+                    onSuccess()
+                    FlashMessage('Login Successfully', "success")
                 })
                 .catch(error => {
                     openCloseModal(false)
@@ -51,7 +31,7 @@ export const Login = (Email, Password, UserType, onSuccess, openCloseModal) => {
                     if (error.code == 'auth/wrong-password') {
                         return FlashMessage('Password is Wrong', "danger")
                     }
-                    if(error.code == 'auth/invalid-email'){
+                    if (error.code == 'auth/invalid-email') {
                         return FlashMessage('Invalid email!', "danger")
                     }
 

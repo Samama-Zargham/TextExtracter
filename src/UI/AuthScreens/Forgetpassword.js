@@ -3,9 +3,21 @@ import React, { useState } from 'react'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { COLORS, GeneralWidth } from '../../Utils/AppStyles'
 import { Header, PrimaryButton, PrimaryTextInput } from './SignIn'
+import { ForgetLink } from '../../Firebase/ForgetLink'
+import Loader from '../../components/Reusable/Loader'
 
 const Forgetpassword = ({ navigation }) => {
     const [email, setemail] = useState('')
+    const [loading, setloading] = useState(false)
+    const handleForget = () => {
+
+        ForgetLink(
+            email,
+            navigation,
+            setloading
+        )
+    }
+
     return (
         <KeyboardAwareScrollView
             keyboardShouldPersistTaps='handled'
@@ -26,11 +38,11 @@ const Forgetpassword = ({ navigation }) => {
             />
 
             <PrimaryButton
-                // onPress={()=> }
+                onPress={handleForget}
                 top={20}
                 title="CONTINUE"
             />
-
+            <Loader loading={loading} />
         </KeyboardAwareScrollView>
     )
 }

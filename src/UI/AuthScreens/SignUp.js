@@ -3,11 +3,25 @@ import React, { useState } from 'react'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { COLORS, GeneralWidth } from '../../Utils/AppStyles'
 import { Header, PrimaryButton, PrimaryTextInput } from './SignIn'
+import Loader from '../../components/Reusable/Loader'
+import { UserSignUp } from '../../Firebase/EmailSignUp'
 
 const SignUp = ({ navigation }) => {
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('')
     const [confirmpassword, setconfirmpassword] = useState('')
+    const [loading, setloading] = useState(false)
+
+    const handleSignUp = () => {
+
+        UserSignUp(
+            email,
+            password,
+            confirmpassword,
+            () => { navigation.navigate("SignIn") },
+            setloading
+        )
+    }
     return (
         <KeyboardAwareScrollView
             keyboardShouldPersistTaps='handled'
@@ -30,7 +44,7 @@ const SignUp = ({ navigation }) => {
                 top={5}
                 bottom={20}
                 placeholder={"Enter your password"}
-                value={email}
+                value={password}
                 onChange={setpassword}
                 headText="Password"
             />
@@ -43,6 +57,7 @@ const SignUp = ({ navigation }) => {
                 headText="Confirm Password"
             />
             <PrimaryButton
+                onPress={handleSignUp}
                 top={20}
                 title="SIGN UP"
             />
@@ -66,6 +81,7 @@ const SignUp = ({ navigation }) => {
                     {"  SING IN"}
                 </Text>
             </Text>
+            <Loader loading={loading} />
         </KeyboardAwareScrollView>
     )
 }

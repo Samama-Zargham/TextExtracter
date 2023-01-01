@@ -1,17 +1,16 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import { FlashMessage } from '../components/SnackBar';
+import { FlashMessage } from '../components/Reusable/SnackBar';
 
 export const UserSignUp = (
   Email,
   password,
   confirmPass,
-  UserType,
   onSuccess,
   openCloseModal,
 ) => {
   let email = Email.toString().trim();
-  // console.log("UserSignUp Method--->>>   ", Password, " - ", ConfirmPassword, " - ", Email, " - ", UserType)
+  console.log("UserSignUp Method--->>>   ", password, " - ", confirmPass, " - ", Email)
   try {
     if (!email || !password) {
       return FlashMessage("Please Fill Email or Password", "danger")

@@ -19,33 +19,8 @@ export const COLORS = {
   defaultText: '#7C7C7C',
 };
 
-export const mapStyle = [
-  {
-    elementType: 'labels',
-    stylers: [
-      {
-        visibility: 'off',
-      },
-    ],
-  },
-  {
-    featureType: 'administrative.land_parcel',
-    stylers: [
-      {
-        visibility: 'off',
-      },
-    ],
-  },
-  {
-    featureType: 'administrative.neighborhood',
-    stylers: [
-      {
-        visibility: 'off',
-      },
-    ],
-  },
-];
-export const GeneralWidth = '90%';
+
+export const GeneralWidth = { width: '90%' };
 export const GeneralTop = { marginTop: WindowHeight * 0.016 };
 
 

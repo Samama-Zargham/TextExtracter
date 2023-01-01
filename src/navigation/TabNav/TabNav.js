@@ -3,7 +3,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { COLORS, WindowHeight } from '../../Utils/AppStyles';
 import Home from '../../UI/TabScreens/Home';
 import Profile from '../../UI/TabScreens/Profile';
-import { HomeIcon } from '../../assets/svgs/Svgs';
 import AnyIcon, { Icons } from '../../components/Reusable/AnyIcon';
 
 

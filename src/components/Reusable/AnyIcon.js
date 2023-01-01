@@ -30,13 +30,13 @@ export const Icons = {
 };
 import { TouchableOpacity } from 'react-native'
 
-const AnyIcon = ({ name, type, size, style, color, onPress, disabled, extraStyle }) => {
+const AnyIcon = ({ name, type, size, style, color, onPress, disabled }) => {
   const Tag = type;
   return (
     <>
       {type && name && (
         <TouchableOpacity
-          style={[{ justifyContent: "center", alignItems: "center" }, extraStyle && extraStyle]}
+          style={{ justifyContent: "center", alignItems: "center" }}
           disabled={disabled}
           onPress={() => {
             onPress ? onPress() : console.log('Nothing to act');

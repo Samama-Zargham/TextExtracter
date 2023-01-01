@@ -143,8 +143,6 @@ android {
         versionCode 1
         versionName '1.0'
         buildConfigField 'boolean', 'IS_NEW_ARCHITECTURE_ENABLED', isNewArchitectureEnabled().toString()
-        //// react-native-camera
-        missingDimensionStrategy 'react-native-camera', 'general' // <--- insert this line
         if (isNewArchitectureEnabled()) {
             // We configure the NDK build only if you decide to opt-in for the New Architecture.
             externalNativeBuild {
@@ -263,7 +261,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation 'com.google.android.gms:play-services-mlkit-text-recognition:18.0.2'
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'  // From node_modules
 
