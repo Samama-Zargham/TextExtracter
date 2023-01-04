@@ -5,13 +5,16 @@ import { COLORS } from '../../Utils/AppStyles'
 import { ImageFromCamera, ImageFromGallrey } from '../../Utils/Common';
 import LargeMessageBox from '../../components/Reusable/LargeMessageBox';
 import { recognizeImage } from '../../Utils/recognizeImage';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
 
 
 const Home = ({ navigation }) => {
+    const usersData = useSelector(state => state.users.userData?.data);
     const [image, setimage] = useState(null)
     const [imageText, setimageText] = useState()
     const [isText, setisText] = useState(false)
-
+    const [question, setquestion] = useState(null)
     const proccessImage = async (url) => {
         if (url) {
             try {
@@ -34,7 +37,18 @@ const Home = ({ navigation }) => {
 
 
     return (
-        <View style={{ flex: 1, backgroundColor: COLORS.WHITE }}>
+        <KeyboardAwareScrollView
+            keyboardShouldPersistTaps='handled'
+            style={{ flex: 1, backgroundColor: COLORS.WHITE }}>
+            <Text style={{ alignSelf: "center", marginTop: 20 }}>
+                <Header
+                    fontSize={14}
+                    width={"25%"}
+                    text={"Your coins : "}
+                    color={COLORS.PRIMARY}
+                />
+                <Text style={{ color: "black" }}>{usersData?.coins ?? 0}</Text>
+            </Text>
             {
                 image ?
                     <View style={{ alignItems: "center", width: "100%", marginTop: 20 }} >
@@ -86,23 +100,43 @@ const Home = ({ navigation }) => {
                     </View>
                     :
                     <>
+                        <Text style={{ fontSize: 14, width: "90%", color: COLORS.BLACK, alignSelf: "center", marginTop: 40 }} >Ask any question or take picture/Select picture from gallery to get your answers and their explation</Text>
 
                         <PrimaryButton
                             onPress={() => ImageFromCamera(setimage)}
                             width={"70%"}
-                            top={"80%"}
+                            top={"15%"}
                             title={"Take Picture"}
                         />
                         <PrimaryButton
                             onPress={() => ImageFromGallrey(setimage)}
-
                             top={20}
                             width={"70%"}
-                            title={"Select From GAllery"}
+                            title={"Select From Gallery"}
                         />
+                        <Text style={{ fontSize: 14, width: "90%", color: COLORS.BLACK, alignSelf: "center", marginTop: 40 }} >Or Ask any question</Text>
+                        <LargeMessageBox
+                            top={5}
+                            placeholder={"Enter your question"}
+                            onChange={setquestion}
+                            value={question}
+                        />
+                        {
+                            question ?
+                                <PrimaryButton
+                                    onPress={() => {
+                                    }}
+                                    width={"60%"}
+                                    top={25}
+                                    fontSize={15}
+                                    title={"Show Explanation"}
+                                />
+                                : null
+                        }
+                        <View style={{ marginTop: 50 }} />
                     </>
             }
-        </View>
+        </KeyboardAwareScrollView>
     )
 }
 

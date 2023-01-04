@@ -4,14 +4,27 @@ import { COLORS } from '../../Utils/AppStyles'
 import { Header, PrimaryButton, PrimaryTextInput } from '../AuthScreens/SignIn'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import auth from '@react-native-firebase/auth';
-import { useDispatch } from 'react-redux'
-import { logOut } from '../../Redux/reducers'
+import { useDispatch, useSelector } from 'react-redux'
+import { logOut, userData } from '../../Redux/reducers'
+import { useFocusEffect } from '@react-navigation/native'
+import { UpdateDoc } from '../../Firebase/Updatedoc'
 
 const Profile = () => {
-    const [name, setname] = useState('')
-    const [age, setage] = useState('')
-    const [profession, setprofession] = useState('')
+    const usersData = useSelector(state => state.users.userData?.data);
+
+    const [name, setname] = useState(usersData?.name)
+    const [age, setage] = useState(usersData?.age)
+    const [profession, setprofession] = useState(usersData?.profession)
+    const [isName, setisName] = useState(false)
+    const [isAge, setisAge] = useState(false)
+    const [isProfession, setisProfession] = useState(false)
+
     let dispatch = useDispatch()
+    useFocusEffect(
+        React.useCallback(() => {
+
+        }, [])
+    )
     return (
         <KeyboardAwareScrollView
             keyboardShouldPersistTaps='handled'
@@ -51,28 +64,47 @@ const Profile = () => {
             <PrimaryTextInput
                 bottom={20}
                 top={5}
+                isSave={isName}
+                setisSave={setisName}
+                disabled={!isName}
+                isSaveIcon={true}
                 placeholder={"Enter your name"}
                 value={name}
                 onChange={setname}
                 headText="Name"
+                maxLength={20}
+                onPress={() => UpdateDoc("name", name, () => dispatch(userData({ ...usersData, name: name })))}
             />
             <PrimaryTextInput
                 bottom={20}
+                isSaveIcon={true}
                 top={5}
+                isSave={isAge}
+                maxLength={2}
+                setisSave={setisAge}
+                disabled={!isAge}
                 placeholder={"Enter your age"}
                 value={age}
                 onChange={setage}
                 headText="Age"
+                keyboardType='decimal-pad'
+                onPress={() => UpdateDoc("age", age, () => dispatch(userData({ ...usersData, age: age })))}
             />
             <PrimaryTextInput
                 bottom={20}
                 top={5}
+                maxLength={20}
+                isSave={isProfession}
+                setisSave={setisProfession}
+                disabled={!isProfession}
+                isSaveIcon={true}
                 placeholder={"Enter your profession"}
                 value={profession}
                 onChange={setprofession}
                 headText="Profession"
+                onPress={() => UpdateDoc("profession", profession, () => dispatch(userData({ ...usersData, profession: profession })))}
             />
-
+            <View style={{ marginTop: 40 }} />
         </KeyboardAwareScrollView>
     )
 }

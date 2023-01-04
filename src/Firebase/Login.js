@@ -1,5 +1,6 @@
 import auth from "@react-native-firebase/auth"
 import { FlashMessage } from "../components/Reusable/SnackBar"
+import firestore from '@react-native-firebase/firestore';
 
 export const Login = (Email, Password, onSuccess, openCloseModal) => {
     console.log(Email, "  ", Password)
@@ -13,8 +14,22 @@ export const Login = (Email, Password, onSuccess, openCloseModal) => {
                 .signInWithEmailAndPassword(Email.toString().trim(), Password)
                 .then(() => {
                     openCloseModal(false)
-                    onSuccess()
-                    FlashMessage('Login Successfully', "success")
+                    firestore()
+                        .collection("Users")
+                        .doc(auth().currentUser.uid)
+                        .get()
+                        .then(documentSnapshot => {
+                            if (documentSnapshot.exists) {
+                                let userData = documentSnapshot.data();
+                                console.log("daata=.>> ", userData)
+                                onSuccess(userData)
+                                FlashMessage('Login Successfully', "success")
+                            }
+                        })
+                        .catch(error => {
+                            console.log('get user ', error);
+                        });
+
                 })
                 .catch(error => {
                     openCloseModal(false)

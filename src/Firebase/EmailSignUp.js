@@ -32,23 +32,26 @@ export const UserSignUp = (
 
             openCloseModal(false);
             FlashMessage('Register Successfully', 'success');
-            onSuccess();
+            console.log(auth().currentUser.uid)
+            firestore()
+              .collection("Users")
+              .doc(auth().currentUser.uid)
+              .set({
+                email: Email,
+                age: "",
+                profession: "",
+                name: "",
+                coins: "5"
+              })
+              .then(() => {
+                console.log('User added!');
+                // console.log('User account created & signed in!', id);
+                onSuccess();
 
-            // firestore()
-            //   .collection(UserType)
-            //   .doc(auth().currentUser.uid)
-            //   .set({
-            //     email: email,
-            //   })
-            //   .then(() => {
-            //     console.log('User added!');
-            //     // console.log('User account created & signed in!', id);
-
-            // })
-            // .catch(error => {
-            //   console.log('FireStore error ->  ', error);
-            //   openCloseModal(false);
-            // });
+              })
+              .catch(error => {
+                console.log('FireStore error ->  ', error);
+              })
           })
           .catch(error => {
             openCloseModal(false);

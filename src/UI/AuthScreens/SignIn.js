@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { userData } from '../../Redux/reducers'
 import { Login } from '../../Firebase/Login'
 import Loader from '../../components/Reusable/Loader'
+import AnyIcon, { Icons } from '../../components/Reusable/AnyIcon'
 
 const SignIn = ({ navigation }) => {
     const [email, setemail] = useState('')
@@ -17,8 +18,8 @@ const SignIn = ({ navigation }) => {
         Login(
             email,
             password,
-            () => {
-                dispatch(userData({ data: "user " }))
+            (data) => {
+                dispatch(userData({ data: data }))
             },
             setloading
         )
@@ -89,7 +90,7 @@ const SignIn = ({ navigation }) => {
         </KeyboardAwareScrollView>
     )
 }
-export const Header = ({ text, width, color, top, bottom, fontSize }) => {
+export const Header = ({ text, width, color, top, bottom, fontSize, }) => {
     return (
         <Text style={{
             color: color ? color : COLORS.textColor,
@@ -106,7 +107,7 @@ export const Header = ({ text, width, color, top, bottom, fontSize }) => {
 }
 export const PrimaryTextInput = ({
     isSecure = false,
-    onPress,
+    onPress = () => { },
     onChange,
     disabled = false,
     placeholder,
@@ -114,15 +115,22 @@ export const PrimaryTextInput = ({
     bottom,
     value,
     maxLength,
-    headText
+    headText,
+    width = "92%",
+    isSaveIcon,
+    isSave,
+    setisSave,
+    keyboardType
 }) => {
     return (
         <>
             <Header fontSize={14} text={headText} />
             <View style={[styles.Input, {
-                width: "92%",
+                width: width,
                 marginTop: top ? top : 0,
                 marginBottom: bottom ? bottom : 0,
+                flexDirection: "row", alignItems: "center",
+                justifyContent: "space-between"
             }]} >
                 <TextInput
                     numberOfLines={1}
@@ -131,15 +139,44 @@ export const PrimaryTextInput = ({
                     style={{
                         height: 50,
                         color: COLORS.defaultText,
-                        marginLeft: 5
+                        marginLeft: 5,
+                        width: "85%",
                     }}
                     placeholder={placeholder}
                     placeholderTextColor={COLORS.defaultText}
                     onChangeText={onChange}
-                    onPressIn={onPress}
+                    keyboardType={keyboardType ?? 'default'}
                     secureTextEntry={isSecure}
                     value={value}
-                />
+                />{
+
+                    isSaveIcon &&
+                    <TouchableOpacity onPress={() => {
+                        isSave && onPress()
+                        setisSave(!isSave)
+                    }} >
+                        {
+                            isSave ?
+                                <AnyIcon
+                                    disabled={true}
+                                    type={Icons.MaterialIcons}
+                                    name={'save-alt'}
+                                    color={COLORS.BLACK}
+                                    size={25}
+                                    style={{ paddingHorizontal: 10 }}
+                                />
+                                :
+                                <AnyIcon
+                                    disabled={true}
+                                    type={Icons.AntDesign}
+                                    name={'edit'}
+                                    color={COLORS.BLACK}
+                                    size={25}
+                                    style={{ paddingHorizontal: 10 }}
+                                />
+                        }
+                    </TouchableOpacity>
+                }
             </View>
         </>
     )
