@@ -1,6 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import {FlashMessage} from '../components/SnackBar';
+import { FlashMessage } from '../components/SnackBar';
 
 export const getUser = async (collection, setUserData, openCloseModal) => {
   if (openCloseModal) openCloseModal(true);

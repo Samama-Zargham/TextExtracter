@@ -7,14 +7,17 @@ import LargeMessageBox from '../../components/Reusable/LargeMessageBox';
 import { recognizeImage } from '../../Utils/recognizeImage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSelector } from 'react-redux';
+import { FlashMessage } from '../../components/Reusable/SnackBar';
 
 
 const Home = ({ navigation }) => {
-    const usersData = useSelector(state => state.users.userData?.data);
+    const usersData = useSelector(state => state.users.userData);
     const [image, setimage] = useState(null)
     const [imageText, setimageText] = useState()
     const [isText, setisText] = useState(false)
     const [question, setquestion] = useState(null)
+
+
     const proccessImage = async (url) => {
         if (url) {
             try {
@@ -35,6 +38,16 @@ const Home = ({ navigation }) => {
         }
     };
 
+    const handleShowExplation = (question) => {
+        if (usersData?.coins > 0) {
+            FlashMessage("You don't have insufficient coins", "danger")
+        }
+        else if (question.length > 10) {
+            navigation.navigate("QuestionsExplanation", { Question: question })
+        } else {
+            FlashMessage("Question string is too short to answer", "danger")
+        }
+    }
 
     return (
         <KeyboardAwareScrollView
@@ -73,10 +86,10 @@ const Home = ({ navigation }) => {
                                     setisText(true)
                                     proccessImage(image)
                                 }}
-                                width={"60%"}
-                                top={"10%"}
+                                width={"50%"}
+                                top={"4%"}
                                 fontSize={15}
-                                title={"Show Text Explanation"}
+                                title={"Show Extracted Text"}
                             />
                                 :
                                 <>
@@ -88,11 +101,13 @@ const Home = ({ navigation }) => {
                                         onPress={() => {
                                             setisText(false)
                                             setimage(null)
+                                            setquestion(null)
+                                            handleShowExplation(imageText)
                                         }}
                                         width={"60%"}
                                         top={"10%"}
                                         fontSize={15}
-                                        title={"Continue"}
+                                        title={"Show Explanation"}
                                     />
                                 </>
                         }
@@ -125,6 +140,8 @@ const Home = ({ navigation }) => {
                             question ?
                                 <PrimaryButton
                                     onPress={() => {
+                                        setimageText(null)
+                                        handleShowExplation(question)
                                     }}
                                     width={"60%"}
                                     top={25}

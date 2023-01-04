@@ -41,7 +41,8 @@ export const UserSignUp = (
                 age: "",
                 profession: "",
                 name: "",
-                coins: "5"
+                coins: "5",
+                responses: []
               })
               .then(() => {
                 console.log('User added!');

@@ -19,7 +19,7 @@ const SignIn = ({ navigation }) => {
             email,
             password,
             (data) => {
-                dispatch(userData({ data: data }))
+                dispatch(userData(data))
             },
             setloading
         )

@@ -10,8 +10,8 @@ import { useFocusEffect } from '@react-navigation/native'
 import { UpdateDoc } from '../../Firebase/Updatedoc'
 
 const Profile = () => {
-    const usersData = useSelector(state => state.users.userData?.data);
-
+    const usersData = useSelector(state => state.users.userData);
+    console.log("first==>>>  ", usersData)
     const [name, setname] = useState(usersData?.name)
     const [age, setage] = useState(usersData?.age)
     const [profession, setprofession] = useState(usersData?.profession)

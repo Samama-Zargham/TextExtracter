@@ -4,6 +4,7 @@ import { COLORS, WindowHeight } from '../../Utils/AppStyles';
 import Home from '../../UI/TabScreens/Home';
 import Profile from '../../UI/TabScreens/Profile';
 import AnyIcon, { Icons } from '../../components/Reusable/AnyIcon';
+import HomeStack from './HomeStack';
 
 
 const Tab = createBottomTabNavigator();
@@ -19,8 +20,8 @@ export default function TabNav() {
         tabBarStyle: { backgroundColor: COLORS.background }
       }}>
       <Tab.Screen
-        name="Home"
-        component={Home}
+        name="HomeStack"
+        component={HomeStack}
         options={{
           tabBarIcon: ({ focused }) =>
             <AnyIcon
