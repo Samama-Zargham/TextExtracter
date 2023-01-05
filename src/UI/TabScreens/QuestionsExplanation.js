@@ -8,8 +8,9 @@ import Loader from '../../components/Reusable/Loader';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import { userData } from '../../Redux/reducers';
+import { PrimaryButton } from '../AuthScreens/SignIn';
 
-const QuestionsExplanation = () => {
+const QuestionsExplanation = ({ navigation }) => {
     const usersData = useSelector(state => state.users.userData);
     let question = useRoute()?.params?.Question;
     let dispatch = useDispatch();
@@ -64,7 +65,7 @@ const QuestionsExplanation = () => {
     }
 
     useEffect(() => {
-        // ApiCall()
+        ApiCall()
     }, [])
 
 
@@ -106,6 +107,14 @@ const QuestionsExplanation = () => {
                         {answerd?.choices[0]?.text}
                     </Text>
             }
+            <PrimaryButton
+                onPress={() => navigation.goBack()}
+                width={"90%"}
+                top={"10%"}
+                bottom={"10%"}
+                fontSize={15}
+                title={"Continue"}
+            />
         </KeyboardAwareScrollView>
     )
 }

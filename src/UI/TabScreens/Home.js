@@ -39,8 +39,8 @@ const Home = ({ navigation }) => {
     };
 
     const handleShowExplation = (question) => {
-        if (usersData?.coins > 0) {
-            FlashMessage("You don't have insufficient coins", "danger")
+        if (usersData?.coins < 1) {
+            FlashMessage("You don't have enough coins", "danger")
         }
         else if (question.length > 10) {
             navigation.navigate("QuestionsExplanation", { Question: question })
