@@ -29,9 +29,9 @@ export const UserSignUp = (
           .createUserWithEmailAndPassword(email, password)
           .then(async user => {
             // const id = user.user.uid
-
+            auth().currentUser.sendEmailVerification()
             openCloseModal(false);
-            FlashMessage('Register Successfully', 'success');
+            FlashMessage('An email has sent to your mail for verification', 'success');
             console.log(auth().currentUser.uid)
             firestore()
               .collection("Users")

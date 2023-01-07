@@ -2,10 +2,11 @@ import ImagePicker from 'react-native-image-crop-picker';
 
 const ImageFromGallrey = callBack => {
   ImagePicker.openPicker({
-    width: 500,
-    height: 500,
+    width: 1200,
+    height: 1200,
     cropping: true,
-    includeBase64: true,
+    showCropGuidelines: true,
+    showCropFrame: true,
     mediaType: "photo",
   })
     .then(imageData => {
@@ -19,9 +20,11 @@ const ImageFromGallrey = callBack => {
 
 const ImageFromCamera = (callBack) => {
   ImagePicker.openCamera({
-    width: 500,
-    height: 500,
+    width: 1200,
+    height: 1200,
     cropping: true,
+    showCropGuidelines: true,
+    showCropFrame: true
   })
     .then(imageData => {
       callBack(imageData?.path);

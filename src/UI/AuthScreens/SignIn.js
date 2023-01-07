@@ -4,14 +4,17 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { COLORS, GeneralWidth } from '../../Utils/AppStyles'
 import { useDispatch } from 'react-redux'
 import { userData } from '../../Redux/reducers'
-import { Login } from '../../Firebase/Login'
+import { Login, loginWithGoogle } from '../../Firebase/Login'
 import Loader from '../../components/Reusable/Loader'
 import AnyIcon, { Icons } from '../../components/Reusable/AnyIcon'
+import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
+
 
 const SignIn = ({ navigation }) => {
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('')
     const [loading, setloading] = useState(false)
+    const [isSigninInProgress, setisSigninInProgress] = useState(false)
     let dispatch = useDispatch();
     const handleSignIn = () => {
 
@@ -86,6 +89,18 @@ const SignIn = ({ navigation }) => {
                     {"  SING UP"}
                 </Text>
             </Text>
+            <GoogleSigninButton
+                style={{ width: 192, height: 56, alignSelf: "center", marginTop: 35 }}
+                size={GoogleSigninButton.Size.Wide}
+                color={GoogleSigninButton.Color.Light}
+                onPress={() =>
+                    loginWithGoogle(
+                        setisSigninInProgress,
+                        (data) => dispatch(userData(data))
+                    )
+                }
+                disabled={isSigninInProgress}
+            />
             <Loader loading={loading} />
         </KeyboardAwareScrollView>
     )

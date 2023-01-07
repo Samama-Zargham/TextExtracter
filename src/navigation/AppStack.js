@@ -7,6 +7,8 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { useDispatch } from 'react-redux';
 import { userData } from '../Redux/reducers';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+
 
 
 
@@ -15,6 +17,7 @@ const Stack = createStackNavigator();
 const AppStack = () => {
   let dispatch = useDispatch();
   React.useEffect(() => {
+    ConfigureGoogle()
     firestore()
       .collection("Users")
       .doc(auth().currentUser.uid)
@@ -42,3 +45,9 @@ const AppStack = () => {
   );
 };
 export default AppStack;
+
+const ConfigureGoogle = () => {
+  GoogleSignin.configure({
+    webClientId: '919222476321-83s028fmuiem5q2bfdfhkgo3kj4rnqto.apps.googleusercontent.com',
+  });
+}
