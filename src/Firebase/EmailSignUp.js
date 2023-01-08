@@ -41,7 +41,7 @@ export const UserSignUp = (
                 age: "",
                 profession: "",
                 name: "",
-                coins: "5",
+                coins: "10",
                 responses: []
               })
               .then(() => {

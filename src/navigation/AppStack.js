@@ -17,7 +17,7 @@ const Stack = createStackNavigator();
 const AppStack = () => {
   let dispatch = useDispatch();
   React.useEffect(() => {
-    ConfigureGoogle()
+      
     firestore()
       .collection("Users")
       .doc(auth().currentUser.uid)
@@ -46,8 +46,4 @@ const AppStack = () => {
 };
 export default AppStack;
 
-const ConfigureGoogle = () => {
-  GoogleSignin.configure({
-    webClientId: '919222476321-83s028fmuiem5q2bfdfhkgo3kj4rnqto.apps.googleusercontent.com',
-  });
-}
+

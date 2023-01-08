@@ -7,7 +7,7 @@ import { userData } from '../../Redux/reducers'
 import { Login, loginWithGoogle } from '../../Firebase/Login'
 import Loader from '../../components/Reusable/Loader'
 import AnyIcon, { Icons } from '../../components/Reusable/AnyIcon'
-import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
+import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
 
 
 const SignIn = ({ navigation }) => {
@@ -89,7 +89,7 @@ const SignIn = ({ navigation }) => {
                     {"  SING UP"}
                 </Text>
             </Text>
-            <GoogleSigninButton
+            {/* <GoogleSigninButton
                 style={{ width: 192, height: 56, alignSelf: "center", marginTop: 35 }}
                 size={GoogleSigninButton.Size.Wide}
                 color={GoogleSigninButton.Color.Light}
@@ -100,7 +100,7 @@ const SignIn = ({ navigation }) => {
                     )
                 }
                 disabled={isSigninInProgress}
-            />
+            /> */}
             <Loader loading={loading} />
         </KeyboardAwareScrollView>
     )
