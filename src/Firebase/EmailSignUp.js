@@ -42,7 +42,8 @@ export const UserSignUp = (
                 profession: "",
                 name: "",
                 coins: "10",
-                responses: []
+                responses: [],
+                Date: new Date().getDate()
               })
               .then(() => {
                 console.log('User added!');

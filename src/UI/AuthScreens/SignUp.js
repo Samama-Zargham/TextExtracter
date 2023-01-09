@@ -5,12 +5,15 @@ import { COLORS, GeneralWidth } from '../../Utils/AppStyles'
 import { Header, PrimaryButton, PrimaryTextInput } from './SignIn'
 import Loader from '../../components/Reusable/Loader'
 import { UserSignUp } from '../../Firebase/EmailSignUp'
+import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
+import { loginWithGoogle } from '../../Firebase/Login'
 
 const SignUp = ({ navigation }) => {
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('')
     const [confirmpassword, setconfirmpassword] = useState('')
     const [loading, setloading] = useState(false)
+    const [isSigninInProgress, setisSigninInProgress] = useState(false)
 
     const handleSignUp = () => {
 
@@ -81,6 +84,18 @@ const SignUp = ({ navigation }) => {
                     {"  SING IN"}
                 </Text>
             </Text>
+            <GoogleSigninButton
+                style={{ width: 192, height: 56, alignSelf: "center", marginTop: 35 }}
+                size={GoogleSigninButton.Size.Wide}
+                color={GoogleSigninButton.Color.Light}
+                onPress={() =>
+                    loginWithGoogle(
+                        setisSigninInProgress,
+                        (data) => dispatch(userData(data))
+                    )
+                }
+                disabled={isSigninInProgress}
+            />
             <Loader loading={loading} />
         </KeyboardAwareScrollView>
     )

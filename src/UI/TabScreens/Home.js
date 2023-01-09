@@ -1,17 +1,17 @@
-import {TouchableOpacity, StyleSheet, Text, View, Image} from 'react-native';
-import React, {useState} from 'react';
-import {Header, PrimaryButton, PrimaryTextInput} from '../AuthScreens/SignIn';
-import {COLORS} from '../../Utils/AppStyles';
-import {ImageFromCamera, ImageFromGallrey} from '../../Utils/Common';
+import { TouchableOpacity, StyleSheet, Text, View, Image } from 'react-native';
+import React, { useState } from 'react';
+import { Header, PrimaryButton, PrimaryTextInput } from '../AuthScreens/SignIn';
+import { COLORS } from '../../Utils/AppStyles';
+import { ImageFromCamera, ImageFromGallrey } from '../../Utils/Common';
 import LargeMessageBox from '../../components/Reusable/LargeMessageBox';
-import {recognizeImage} from '../../Utils/recognizeImage';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
-import {FlashMessage} from '../../components/Reusable/SnackBar';
-import AnyIcon, {Icons} from '../../components/Reusable/AnyIcon';
+import { recognizeImage } from '../../Utils/recognizeImage';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
+import { FlashMessage } from '../../components/Reusable/SnackBar';
+import AnyIcon, { Icons } from '../../components/Reusable/AnyIcon';
 import * as ImagePicker from 'react-native-image-picker';
 
-const Home = ({navigation}) => {
+const Home = ({ navigation }) => {
   const usersData = useSelector(state => state.users.userData);
   const [image, setimage] = useState(null);
   const [imageText, setimageText] = useState();
@@ -25,12 +25,12 @@ const Home = ({navigation}) => {
         let extractedText = '';
         result?.blocks?.map(item => {
           let line = item?.lines[0].text;
-          extractedText = extractedText + ' ' + line;
+          extractedText = extractedText + '\n' + line;
         });
 
         console.log('first===>  ', extractedText);
         setimageText(extractedText);
-      } catch (error) {}
+      } catch (error) { }
     }
   };
 
@@ -38,7 +38,7 @@ const Home = ({navigation}) => {
     if (usersData?.coins < 1) {
       FlashMessage("You don't have enough coins", 'danger');
     } else if (question.length > 10) {
-      navigation.navigate('QuestionsExplanation', {Question: question});
+      navigation.navigate('QuestionsExplanation', { Question: question });
     } else {
       FlashMessage('Question string is too short to answer', 'danger');
     }
@@ -47,18 +47,18 @@ const Home = ({navigation}) => {
   return (
     <KeyboardAwareScrollView
       keyboardShouldPersistTaps="handled"
-      style={{flex: 1, backgroundColor: COLORS.WHITE}}>
-      <Text style={{textAlign: 'right', marginTop: 20, right: 20}}>
+      style={{ flex: 1, backgroundColor: COLORS.WHITE }}>
+      <Text style={{ textAlign: 'right', marginTop: 20, right: 20 }}>
         <Header
           fontSize={14}
           width={'25%'}
           text={'Coins : '}
           color={COLORS.PRIMARY}
         />
-        <Text style={{color: 'black'}}>{usersData?.coins ?? 0}</Text>
+        <Text style={{ color: 'black' }}>{usersData?.coins ?? 0}</Text>
       </Text>
       {image ? (
-        <View style={{alignItems: 'center', width: '100%', marginTop: 20}}>
+        <View style={{ alignItems: 'center', width: '100%', marginTop: 20 }}>
           <Text
             onPress={() => navigation.navigate('SignUp')}
             style={{
@@ -72,8 +72,8 @@ const Home = ({navigation}) => {
           </Text>
           <Image
             resizeMode="center"
-            style={{width: '100%', height: 220}}
-            source={{uri: image}}
+            style={{ width: '100%', height: 220 }}
+            source={{ uri: image }}
           />
 
           {!isText ? (
@@ -111,7 +111,7 @@ const Home = ({navigation}) => {
                   name={'camera-retake-outline'}
                   color={COLORS.WHITE}
                   size={40}
-                  style={{paddingHorizontal: 10}}
+                  style={{ paddingHorizontal: 10 }}
                 />
                 <Text
                   style={{
@@ -171,7 +171,7 @@ const Home = ({navigation}) => {
               name={'camera-outline'}
               color={COLORS.WHITE}
               size={100}
-              style={{paddingHorizontal: 10}}
+              style={{ paddingHorizontal: 10 }}
             />
           </TouchableOpacity>
           <PrimaryButton
@@ -201,7 +201,7 @@ const Home = ({navigation}) => {
                                 />
                                 : null
                         } */}
-          <View style={{marginTop: 50}} />
+          <View style={{ marginTop: 50 }} />
         </>
       )}
     </KeyboardAwareScrollView>

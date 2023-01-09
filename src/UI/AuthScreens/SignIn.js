@@ -89,7 +89,7 @@ const SignIn = ({ navigation }) => {
                     {"  SING UP"}
                 </Text>
             </Text>
-            {/* <GoogleSigninButton
+            <GoogleSigninButton
                 style={{ width: 192, height: 56, alignSelf: "center", marginTop: 35 }}
                 size={GoogleSigninButton.Size.Wide}
                 color={GoogleSigninButton.Color.Light}
@@ -100,7 +100,7 @@ const SignIn = ({ navigation }) => {
                     )
                 }
                 disabled={isSigninInProgress}
-            /> */}
+            />
             <Loader loading={loading} />
         </KeyboardAwareScrollView>
     )
