@@ -13,7 +13,7 @@ const Splash = props => {
       }} >
         <Text
           style={{ fontSize: 20, fontWeight: "700", marginTop: "80%", color: COLORS.BLACK }}
-        >Text Extracter</Text>
+        >MCQ Genius Scanner</Text>
       </View>
     </>
   );

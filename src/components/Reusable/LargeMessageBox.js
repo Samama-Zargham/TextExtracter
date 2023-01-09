@@ -27,7 +27,7 @@ const LargeMessageBox = ({ onChange, placeholder, value, top, height }) => {
           ref={inputRef}
           maxLength={320}
           multiline
-          style={{ width: "70%" }}
+          style={{ width: "70%", color: COLORS.BLACK }}
           placeholder={placeholder}
           placeholderTextColor={COLORS.lightGray}
           onChangeText={onChange}
