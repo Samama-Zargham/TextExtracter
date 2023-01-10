@@ -34,7 +34,7 @@ const QuestionsExplanation = ({ navigation }) => {
       model: 'davinci:ft-personal:id-2023-01-04-19-42-19',
       prompt: `<<${question}>>->>>`,
       temperature: 0,
-      max_tokens: 500,
+      max_tokens: 200,
       top_p: 0.5,
       stop: 'END\n\n',
     });
@@ -52,9 +52,7 @@ const QuestionsExplanation = ({ navigation }) => {
         console.log(result);
         setOGquestion(result);
         getAnswered(result?.choices[0]?.text, setloading, setanswer);
-      })
-
-      .catch(error => {
+      }).catch(error => {
         console.log('error', error);
         setloading(false);
         FlashMessage('No Internet connection', 'danger');
@@ -90,28 +88,29 @@ const QuestionsExplanation = ({ navigation }) => {
         console.log(result);
         setanswer(result);
 
-        firestore()
-          .collection('Users')
-          .doc(auth().currentUser.uid)
-          .update({
-            responses: firestore.FieldValue.arrayUnion({
-              answer: result,
-              question: question,
-            }),
-            coins: usersData?.coins == 0 ? 0 : usersData?.coins - 1,
-          })
-          .then(() => {
-            dispatch(
-              userData({
-                ...usersData,
-                coins: usersData?.coins == 0 ? 0 : usersData?.coins - 1,
+        result?.choices[0]?.text != undefined && (
+          firestore()
+            .collection('Users')
+            .doc(auth().currentUser.uid)
+            .update({
+              responses: firestore.FieldValue.arrayUnion({
+                answer: result,
+                question: question,
               }),
-            );
-          })
-          .catch(error => {
-            console.log('error', error);
-          });
-
+              coins: usersData?.coins == 0 ? 0 : usersData?.coins - 1,
+            })
+            .then(() => {
+              dispatch(
+                userData({
+                  ...usersData,
+                  coins: usersData?.coins == 0 ? 0 : usersData?.coins - 1,
+                }),
+              );
+            })
+            .catch(error => {
+              console.log('error', error);
+            })
+        )
         setloading(false);
       })
       .catch(error => {
@@ -154,7 +153,7 @@ const QuestionsExplanation = ({ navigation }) => {
               {'Question is not supported'}
             </Text>
           </>
-        ) : (
+        ) : answer?.choices[0]?.text != undefined ? (
           <>
             <Text
               style={{
@@ -179,7 +178,23 @@ const QuestionsExplanation = ({ navigation }) => {
             </Text>
             <LargeMessageBox value={answer?.choices[0]?.text} />
           </>
-        )}
+        ) :
+          (
+            <>
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: COLORS.textColor,
+                  alignSelf: 'center',
+                  marginTop: 20,
+                  fontWeight: '500',
+                }}>
+                Server overloaded
+              </Text>
+              <LargeMessageBox value={error} />
+            </>
+          )
+        }
         <PrimaryButton
           onPress={() => navigation.goBack()}
           width={'90%'}
@@ -194,6 +209,4 @@ const QuestionsExplanation = ({ navigation }) => {
 
 export default QuestionsExplanation;
 
-const styles = StyleSheet.create({});
-
-
+const error = "Server error Occured!. That model is currently overloaded with other requests. You can retry your request, or contact us through our help center at help.openai.com"

@@ -25,7 +25,7 @@ const Home = ({ navigation }) => {
         let extractedText = '';
         result?.blocks?.map(item => {
           let line = item?.lines[0].text;
-          extractedText = extractedText + '\n' + line;
+          extractedText = extractedText + line + '\n';
         });
 
         console.log('first===>  ', extractedText);
